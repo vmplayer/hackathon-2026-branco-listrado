@@ -1,0 +1,20 @@
+Requisitos Funcionais:
+
+RF01-Gestão Territorial: O sistema deve cadastrar e vincular agentes de saúde às suas respectivas microáreas e faixas de ruas.
+
+RFO2 - Registro de Campo (App do Agente): O agente deve conseguir preencher e enviar formulários rapidos de saúde (sinais vitais, sintomas, alertas) diretamente do campo.
+
+RFO3 - Painel Clínico (Painel do Médico): O sistema deve exibir os dados enviados pelos agentes organizados e priorizados para o médico da UBS antes do atendimento.
+
+RFO4 - Comunicação Externa (Integração WhatsApp): O sistema deve disparar automaticamente uma mensagem formatada via WhatsApp para o paciente com as orientações e atualizações inseridas pelo médico após a consulta.
+
+O que o MVP entrega:
+
+1. Banco de Dados e Backend 100% funcionais e seguros: Toda a lógica de rotas, microáreas, usuários e transações já está programada e rodando.
+
+2. Módulo Agente (Front-end mobile/web leve): Tela enxuta para o envio rápido de dados de campo.
+
+3. Módulo Médico (Painel Web):
+Visão antecipada dos casos da microárea.
+
+4. Automação de Retorno: Disparo das orientações pós-consulta via WhatsApp para fechar o ciclo com o paciente.
