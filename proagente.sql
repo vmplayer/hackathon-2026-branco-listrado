@@ -1,58 +1,103 @@
-Table microareas {
-  id serial [pk]
-  cidade varchar(150) [not null]
-  descricao varchar(150)
-  bairro varchar(100) [not null]
-  complemento text
-  ativa boolean [not null, default: true]
-}
 
-Table familia {
-  id serial [pk]
-  microareas_id int [not null]
-  numero int [not null]
-  responsavel varchar(150) [not null]
-  status varchar(20) [not null, default: 'ATIVA']
-}
+CREATE TABLE cidade (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL
+);
 
-Table pacientes {
-  id serial [pk]
-  familia_id int
-  nome varchar(120) [not null]
-  cpf varchar(11) [not null, unique]
-  email varchar(150)
-  endereco varchar(300) [not null]
-  data_nasc date [not null]
-  sexo char(1)
-  telefone varchar(20) [not null]
-}
+CREATE TABLE microareas (
+    id SERIAL PRIMARY KEY,
+    cidade_id INT NOT NULL,
+    descricao VARCHAR(150),
+    obs TEXT,
+    ativa BOOLEAN NOT NULL DEFAULT TRUE,
 
-Table agentes {
-  id serial [pk]
-  microareas_id int
-  nome varchar(120) [not null]
-  cpf varchar(11) [not null, unique]
-  telefone varchar(20) [not null]
-  email varchar(150)
-  data_cadastro date [not null]
-  ativo boolean [not null, default: true]
-}
+    FOREIGN KEY (cidade_id) REFERENCES cidade(id)
+);
 
-Table visitas {
-  id serial [pk]
-  pacientes_id int [not null]
-  agentes_id int [not null]
-  data_visita date [not null]
-  situacao varchar(30) [not null]
-  orientacao text
-  encaminhamento boolean [not null, default: false]
-  descricao_encaminhamento text
-  prox_visita date
-  observacao text
-}
+CREATE TABLE familia (
+    id SERIAL PRIMARY KEY,
+    microarea_id INT NOT NULL,
+    endereco VARCHAR(100) NOT NULL,
+    numero INT NOT NULL,
+    bairro VARCHAR(100) NOT NULL,
+    cep VARCHAR(9),
+    responsavel VARCHAR(150) NOT NULL,
 
-Ref: familia.microareas_id > microareas.id
-Ref: pacientes.familia_id > familia.id
-Ref: agentes.microareas_id > microareas.id
-Ref: visitas.pacientes_id > pacientes.id
-Ref: visitas.agentes_id > agentes.id
+    FOREIGN KEY (microarea_id) REFERENCES microareas(id)
+);
+
+CREATE TABLE pacientes (
+    id SERIAL PRIMARY KEY,
+    carteira_sus VARCHAR(15) NOT NULL UNIQUE,
+    nome VARCHAR(120) NOT NULL,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    email VARCHAR(150),
+    endereco VARCHAR(300) NOT NULL,
+    data_nasc DATE NOT NULL,
+    sexo CHAR(1) CHECK (sexo IN ('M','F')),
+    telefone VARCHAR(20) NOT NULL,
+    alergia TEXT,
+    tipo_sanguineo VARCHAR(5),
+    historico TEXT
+);
+
+CREATE TABLE agentes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    telefone VARCHAR(20) NOT NULL,
+    email VARCHAR(150),
+    data_cadastro DATE NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE medicos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(120) NOT NULL,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    crm VARCHAR(10) NOT NULL UNIQUE,
+    crm_uf CHAR(2) NOT NULL UNIQUE,
+    especialidade VARCHAR(80) NOT NULL,
+    telefone VARCHAR(20) NOT NULL,
+    email VARCHAR(150),
+    data_cadastro DATE NOT NULL DEFAULT CURRENT_DATE,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE
+
+);
+
+CREATE TABLE visitas (
+    id SERIAL PRIMARY KEY,
+    pacientes_id INT NOT NULL,
+    agentes_id INT NOT NULL,
+    data_visita DATE NOT NULL,
+    situacao VARCHAR(30) NOT NULL,
+    orientacao TEXT,
+    historico TEXT,
+    encaminhamento BOOLEAN DEFAULT FALSE,
+    descricao_encaminhamento TEXT,
+    prox_visita DATE,
+    observacao TEXT,
+
+    FOREIGN KEY (pacientes_id) REFERENCES pacientes(id),
+    FOREIGN KEY (agentes_id) REFERENCES agentes(id)
+);
+
+CREATE TABLE consultas (
+    id SERIAL PRIMARY KEY,
+    pacientes_id INT NOT NULL,
+    medicos_id INT NOT NULL,
+    visitas_id INT,
+    data_hora TIMESTAMP NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'AGENDADA' CHECK (status IN ('AGENDADA','REALIZADA','CANCELADA','FALTOU')),
+    motivo TEXT NOT NULL,
+    diagnostico TEXT,
+    prescricao TEXT,
+    retorno DATE,
+    observacao TEXT,
+    data_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (pacientes_id) REFERENCES pacientes(id),
+    FOREIGN KEY (medicos_id) REFERENCES medicos(id),
+    FOREIGN KEY (visitas_id) REFERENCES visitas(id)
+);
+
