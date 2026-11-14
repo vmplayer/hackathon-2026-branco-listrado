@@ -1,6 +1,6 @@
 # Frontend Proagente
 
-Interface simples em HTML, CSS e JavaScript puro. Usa `fetch` para acessar os sete cadastros da API.
+Interface simples em HTML, CSS e JavaScript puro. Usa `fetch` para acessar os cadastros da API.
 
 Na pasta principal do projeto, com o PostgreSQL configurado e as migrations executadas:
 
@@ -12,7 +12,7 @@ Abra **http://localhost:3000** no navegador (ou a porta configurada no `.env`). 
 
 Escolha um cadastro no menu. Use **Novo cadastro**, **Editar** ou **Excluir**; a exclusão pede confirmação. A tabela mostra dez registros por página e os erros da API aparecem na tela.
 
-Cadastre primeiro áreas, microáreas, ruas e famílias, depois agentes, pacientes e visitas. Os relacionamentos são preenchidos pelo ID mostrado nas tabelas. CPF e SUS devem conter somente números.
+Cadastre cidades, microáreas e famílias, depois agentes, pacientes, médicos, visitas e consultas. Os relacionamentos aparecem por nome e são armazenados pelos IDs no banco. CPF e SUS devem conter somente números.
 
 - `index.html`: estrutura da página.
 - `css/style.css`: aparência e adaptação para celular.

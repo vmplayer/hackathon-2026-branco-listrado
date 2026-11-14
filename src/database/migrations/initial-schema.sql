@@ -1,4 +1,3 @@
-
 CREATE TABLE cidade (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(150) NOT NULL
@@ -100,4 +99,3 @@ CREATE TABLE consultas (
     FOREIGN KEY (medicos_id) REFERENCES medicos(id),
     FOREIGN KEY (visitas_id) REFERENCES visitas(id)
 );
-

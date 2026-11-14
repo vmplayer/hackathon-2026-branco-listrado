@@ -16,27 +16,21 @@ export const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-D
 },'Data inválida');
 
 export const schemas = {
-  areas: z.object({ nome: z.enum(['A', 'B', 'C', 'D']) }).strict(),
+  cidades: z.object({ nome: text(150) }).strict(),
   microareas: z.object({
-    area_id: fk,
+    cidade_id: fk,
     descricao: optionalText(150),
-    cidade: text(150),
-    bairro: text(100),
-    cep: optionalText(9),
-    complemento: longText,
+    observacao: longText,
     ativa: z.boolean().optional()
-  }).strict(),
-  ruas: z.object({ 
-    microarea_id: fk,
-    numero: integer.min(1).max(40),
-    nome: text(150)
   }).strict(),
   familia: z.object({
-    ruas_id: fk,
+    microarea_id: fk,
+    descricao: optionalText(150),
+    endereco: text(300),
     numero: integer,
-    complemento: optionalText(100),
+    bairro: text(100),
+    cep: optionalText(9),
     responsavel: text(150),
-    ativa: z.boolean().optional()
   }).strict(),
   agentes: z.object({
     microarea_id: fk,
@@ -44,6 +38,7 @@ export const schemas = {
     cpf,
     telefone: text(20),
     email,
+    senha_acesso: z.string().min(8).max(200).optional(),
     data_cadastro: dateSchema.optional(),
     ativo: z.boolean().optional()
   }).strict(),
@@ -56,9 +51,23 @@ export const schemas = {
   }).strict(),
   visitas: z.object({
     pacientes_id: fk, agentes_id: fk, data_visita: dateSchema,
-    situacao: z.enum(['REALIZADA', 'AUSENTE', 'RECUSADA', 'REAGENDADA']),
+    situacao: z.enum(['IDOSO', 'CRIANCA', 'GESTANTE', 'ACAMADO', 'OUTRO']),
     orientacao: longText, historico: longText, encaminhamento: z.boolean().optional(),
     descricao_encaminhamento: longText, prox_visita: dateSchema.nullable().optional(), observacao: longText,
+  }).strict(),
+  medicos: z.object({
+    nome: text(120), cpf, crm: text(10), crm_uf: z.string().trim().length(2),
+    especialidade: text(80), telefone: text(20), email, senha_acesso: z.string().min(8).max(200).optional(),
+    data_cadastro: dateSchema.optional(),
+    ativo: z.boolean().optional(),
+  }).strict(),
+  consultas: z.object({
+    pacientes_id: fk, medicos_id: fk, visitas_id: fk.nullable().optional(),
+    data_ultima_visita: dateSchema.nullable().optional(),
+    data_hora: z.string().datetime({ local: true }),
+    status: z.enum(['AGENDADA', 'REALIZADA', 'CANCELADA', 'FALTOU']).optional(),
+    motivo: text(10000), diagnostico: longText, prescricao: longText,
+    retorno: dateSchema.nullable().optional(), observacao: longText,
   }).strict(),
 };
 

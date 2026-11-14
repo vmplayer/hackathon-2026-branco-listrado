@@ -8,25 +8,45 @@
   <script src="/js/script.js" defer></script>
 </head>
 <body>
+  <section id="login-screen" class="login-screen" aria-labelledby="login-titulo">
+    <div class="login-card">
+      <p class="marca">+ ProAgente</p>
+      <h1 id="login-titulo">Entrar no sistema</h1>
+      <p class="ajuda">Acesse com seu usuário da UBS.</p>
+      <p id="login-mensagem" class="erro" role="alert" hidden></p>
+      <form id="login-formulario">
+        <label>Email
+          <input id="login-email" type="email" autocomplete="username" required>
+        </label>
+        <label>Senha
+          <input id="login-senha" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit" class="principal">Entrar</button>
+      </form>
+    </div>
+  </section>
   <header>
     <div class="container">
       <p class="marca">+ ProAgente</p>
       <h1>Cuidar começa por conhecer.</h1>
       <p>Organize os cadastros da comunidade e acompanhe suas visitas.</p>
+      <div class="sessao-atual">
+        <span id="usuario-atual"></span>
+        <button type="button" id="sair">Sair</button>
+      </div>
     </div>
   </header>
 
   <main class="container">
-    <nav aria-label="Cadastros">
-      <button type="button" data-recurso="areas" class="selecionado" aria-pressed="true">Áreas</button>
-      <button type="button" data-recurso="microareas" aria-pressed="false">Microáreas</button>
-      <button type="button" data-recurso="ruas" aria-pressed="false">Ruas</button>
-      <button type="button" data-recurso="familia" aria-pressed="false">Famílias</button>
-      <button type="button" data-recurso="agentes" aria-pressed="false">Agentes</button>
-      <button type="button" data-recurso="pacientes" aria-pressed="false">Pacientes</button>
-      <button type="button" data-recurso="visitas" aria-pressed="false">Visitas</button>
-      <button type="button" data-recurso="visitas" aria-pressed="false">Consultas</button>
+    <nav aria-label="Telas principais">
+      <button type="button" data-grupo="cidades" class="selecionado" aria-pressed="true">Cidades</button>
+      <button type="button" data-grupo="familia" aria-pressed="false">Famílias</button>
+      <button type="button" data-grupo="visitas" aria-pressed="false">Visitas</button>
+      <button type="button" data-grupo="consultas" aria-pressed="false">Consultas</button>
+      <button type="button" data-grupo="agentes" aria-pressed="false">Agentes</button>
+      <button type="button" data-grupo="medicos" aria-pressed="false">Médicos</button>
     </nav>
+    <div id="subnavegacao" aria-label="Subtelas"></div>
 
     <p id="mensagem" role="status" aria-live="polite" hidden></p>
 
@@ -34,11 +54,11 @@
       <div class="topo-painel">
         <div>
           <p class="legenda">CADASTROS DA COMUNIDADE</p>
-          <h2 id="titulo">Áreas</h2>
+          <h2 id="titulo">Cidades</h2>
         </div>
         <button type="button" id="novo" class="principal">+ Novo cadastro</button>
       </div>
-      <p class="ajuda">Comece pelas áreas, depois microáreas, ruas e famílias. Use o ID exibido na tabela para relacionar os cadastros.</p>
+      <p class="ajuda">Cadastre cidades, microáreas e famílias. Os relacionamentos aparecem pelos nomes e são armazenados pelos IDs no banco.</p>
 
       <div class="tabela-container">
         <table>
@@ -67,7 +87,22 @@
         </div>
       </form>
     </section>
-    <footer>ProAgente · Espancamento de professor e chatgpt</footer>
+    <section class="modal" id="perfil-modal" role="dialog" aria-modal="true" aria-labelledby="perfil-titulo" hidden>
+      <div class="modal-conteudo">
+        <button type="button" class="modal-fechar" id="fechar-perfil" aria-label="Fechar perfil">×</button>
+        <div class="perfil-cabecalho">
+          <div class="perfil-avatar" id="perfil-avatar"></div>
+          <div>
+            <p class="legenda" id="perfil-tipo">PERFIL</p>
+            <h2 id="perfil-titulo">Perfil</h2>
+          </div>
+        </div>
+        <div class="perfil-detalhes" id="perfil-detalhes"></div>
+        <h3>Histórico</h3>
+        <div class="perfil-feed" id="perfil-feed"></div>
+      </div>
+    </section>
+    <footer>ProAgente · Construindo pontes para a saúde</footer>
   </main>
 </body>
 </html>
