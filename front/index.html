@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProAgente</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/script.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <p class="marca">+ ProAgente</p>
+      <h1>Cuidar começa por conhecer.</h1>
+      <p>Organize os cadastros da comunidade e acompanhe suas visitas.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav aria-label="Cadastros">
+      <button type="button" data-recurso="areas" class="selecionado" aria-pressed="true">Áreas</button>
+      <button type="button" data-recurso="microareas" aria-pressed="false">Microáreas</button>
+      <button type="button" data-recurso="ruas" aria-pressed="false">Ruas</button>
+      <button type="button" data-recurso="familia" aria-pressed="false">Famílias</button>
+      <button type="button" data-recurso="agentes" aria-pressed="false">Agentes</button>
+      <button type="button" data-recurso="pacientes" aria-pressed="false">Pacientes</button>
+      <button type="button" data-recurso="visitas" aria-pressed="false">Visitas</button>
+      <button type="button" data-recurso="visitas" aria-pressed="false">Consultas</button>
+    </nav>
+
+    <p id="mensagem" role="status" aria-live="polite" hidden></p>
+
+    <section class="painel" aria-labelledby="titulo">
+      <div class="topo-painel">
+        <div>
+          <p class="legenda">CADASTROS DA COMUNIDADE</p>
+          <h2 id="titulo">Áreas</h2>
+        </div>
+        <button type="button" id="novo" class="principal">+ Novo cadastro</button>
+      </div>
+      <p class="ajuda">Comece pelas áreas, depois microáreas, ruas e famílias. Use o ID exibido na tabela para relacionar os cadastros.</p>
+
+      <div class="tabela-container">
+        <table>
+          <caption class="sr-only" id="descricao-tabela">Cadastros de áreas</caption>
+          <thead id="cabecalho"></thead>
+          <tbody id="registros"></tbody>
+        </table>
+      </div>
+      <div class="paginacao">
+        <span id="resumo" aria-live="polite">Carregando...</span>
+        <div>
+          <button type="button" id="anterior" disabled>Anterior</button>
+          <button type="button" id="proxima" disabled>Próxima</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="painel" id="editor" aria-labelledby="titulo-formulario" hidden>
+      <h2 id="titulo-formulario">Novo cadastro</h2>
+      <p class="ajuda">Campos com * são obrigatórios. CPF e SUS devem conter apenas números.</p>
+      <form id="formulario">
+        <div class="campos" id="campos"></div>
+        <div class="acoes-formulario">
+          <button type="submit" class="principal" id="salvar">Salvar cadastro</button>
+          <button type="button" id="cancelar">Cancelar</button>
+        </div>
+      </form>
+    </section>
+    <footer>ProAgente · Espancamento de professor e chatgpt</footer>
+  </main>
+</body>
+</html>

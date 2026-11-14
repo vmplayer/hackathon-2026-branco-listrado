@@ -7,6 +7,7 @@ export class InitialSchema1794614400000 implements MigrationInterface {
         id SERIAL PRIMARY KEY,
         nome CHAR(1) NOT NULL UNIQUE CONSTRAINT ck_areas_nome CHECK (nome IN ('A','B','C','D'))
       );
+
       CREATE TABLE microareas (
         id SERIAL PRIMARY KEY,
         area_id INT NOT NULL REFERENCES areas(id),
@@ -14,6 +15,7 @@ export class InitialSchema1794614400000 implements MigrationInterface {
         bairro VARCHAR(100) NOT NULL, cep VARCHAR(9), complemento TEXT,
         ativa BOOLEAN NOT NULL DEFAULT TRUE
       );
+
       CREATE TABLE ruas (
         id SERIAL PRIMARY KEY,
         microarea_id INT NOT NULL REFERENCES microareas(id),
@@ -21,11 +23,13 @@ export class InitialSchema1794614400000 implements MigrationInterface {
         nome VARCHAR(150) NOT NULL,
         CONSTRAINT uq_ruas_microarea_numero UNIQUE (microarea_id, numero)
       );
+
       CREATE TABLE familia (
         id SERIAL PRIMARY KEY, ruas_id INT NOT NULL REFERENCES ruas(id),
         numero INT NOT NULL, complemento VARCHAR(100),
         responsavel VARCHAR(150) NOT NULL, ativa BOOLEAN NOT NULL DEFAULT TRUE
       );
+
       CREATE TABLE agentes (
         id SERIAL PRIMARY KEY, microarea_id INT NOT NULL REFERENCES microareas(id),
         nome VARCHAR(120) NOT NULL,
@@ -34,6 +38,7 @@ export class InitialSchema1794614400000 implements MigrationInterface {
         data_cadastro DATE NOT NULL DEFAULT CURRENT_DATE,
         ativo BOOLEAN NOT NULL DEFAULT TRUE
       );
+
       CREATE TABLE pacientes (
         id SERIAL PRIMARY KEY, familia_id INT NOT NULL REFERENCES familia(id),
         carteira_sus VARCHAR(15) NOT NULL UNIQUE CONSTRAINT ck_pacientes_sus CHECK (carteira_sus ~ '^[0-9]{15}$'),
@@ -45,6 +50,7 @@ export class InitialSchema1794614400000 implements MigrationInterface {
         tipo_sanguineo VARCHAR(3) CONSTRAINT ck_pacientes_sangue CHECK (tipo_sanguineo IN ('A+','A-','B+','B-','AB+','AB-','O+','O-')),
         historico TEXT, ativo BOOLEAN NOT NULL DEFAULT TRUE
       );
+
       CREATE TABLE visitas (
         id SERIAL PRIMARY KEY, pacientes_id INT NOT NULL REFERENCES pacientes(id),
         agentes_id INT NOT NULL REFERENCES agentes(id), data_visita DATE NOT NULL,
@@ -54,6 +60,7 @@ export class InitialSchema1794614400000 implements MigrationInterface {
         CONSTRAINT ck_visitas_proxima CHECK (prox_visita IS NULL OR prox_visita >= data_visita),
         CONSTRAINT ck_visitas_encaminhamento CHECK (encaminhamento = FALSE OR descricao_encaminhamento IS NOT NULL)
       );
+      
       CREATE INDEX idx_microareas_area ON microareas(area_id);
       CREATE INDEX idx_ruas_microarea ON ruas(microarea_id);
       CREATE INDEX idx_familia_rua ON familia(ruas_id);

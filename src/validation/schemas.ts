@@ -10,23 +10,42 @@ const cpf = z.string().regex(/^[0-9]{11}$/, 'CPF deve conter 11 dígitos, sem po
 const email = z.string().trim().email().max(150).nullable().optional();
 export const dateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD').refine(value => {
   const parsed = new Date(`${value}T00:00:00.000Z`);
-  return value >= '0001-01-01' && !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
-}, 'Data inválida');
+  return value >= '0001-01-01' &&
+  !Number.isNaN(parsed.getTime()) &&
+  parsed.toISOString().slice(0, 10) === value;
+},'Data inválida');
 
 export const schemas = {
   areas: z.object({ nome: z.enum(['A', 'B', 'C', 'D']) }).strict(),
   microareas: z.object({
-    area_id: fk, descricao: optionalText(150), cidade: text(150), bairro: text(100),
-    cep: optionalText(9), complemento: longText, ativa: z.boolean().optional(),
+    area_id: fk,
+    descricao: optionalText(150),
+    cidade: text(150),
+    bairro: text(100),
+    cep: optionalText(9),
+    complemento: longText,
+    ativa: z.boolean().optional()
   }).strict(),
-  ruas: z.object({ microarea_id: fk, numero: integer.min(1).max(40), nome: text(150) }).strict(),
+  ruas: z.object({ 
+    microarea_id: fk,
+    numero: integer.min(1).max(40),
+    nome: text(150)
+  }).strict(),
   familia: z.object({
-    ruas_id: fk, numero: integer, complemento: optionalText(100),
-    responsavel: text(150), ativa: z.boolean().optional(),
+    ruas_id: fk,
+    numero: integer,
+    complemento: optionalText(100),
+    responsavel: text(150),
+    ativa: z.boolean().optional()
   }).strict(),
   agentes: z.object({
-    microarea_id: fk, nome: text(120), cpf, telefone: text(20), email,
-    data_cadastro: dateSchema.optional(), ativo: z.boolean().optional(),
+    microarea_id: fk,
+    nome: text(120),
+    cpf,
+    telefone: text(20),
+    email,
+    data_cadastro: dateSchema.optional(),
+    ativo: z.boolean().optional()
   }).strict(),
   pacientes: z.object({
     familia_id: fk, carteira_sus: z.string().regex(/^[0-9]{15}$/, 'SUS deve conter 15 dígitos'),

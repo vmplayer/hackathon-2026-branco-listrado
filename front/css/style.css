@@ -1,0 +1,289 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #243b3a;
+  background: #f3f6f5;
+  line-height: 1.5;
+}
+
+.container {
+  width: 92%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+header {
+  background: #155e56;
+  color: white;
+  padding: 30px 0 38px;
+}
+
+.marca {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 18px;
+}
+
+h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+header p:last-child {
+  margin: 0;
+  color: #d4e8e3;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
+}
+
+button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 16px;
+  background: white;
+  color: #31534e;
+  border: 1px solid #b9cbc5;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #e8f2ee;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+
+.principal, nav .selecionado {
+  color: white;
+  background: #176b5b;
+  border-color: #176b5b;
+}
+
+.principal:hover, nav .selecionado:hover {
+  background: #105447;
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #bd8a26;
+  outline-offset: 3px;
+}
+
+.painel {
+  background: white;
+  border: 1px solid #dce5e1;
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.topo-painel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.legenda {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #54716b;
+  margin: 0 0 4px;
+}
+
+h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.ajuda {
+  font-size: 14px;
+  color: #586e69;
+  margin: 14px 0 22px;
+}
+
+.tabela-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
+}
+
+th {
+  background: #f0f5f2; 
+  color: #4b655f;
+  font-size: 12px;
+}
+
+th, td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e3eae6;
+}
+
+td {
+  max-width: 280px;
+  overflow-wrap: anywhere;
+}
+
+td:last-child {
+  min-width: 180px;
+}
+
+.acoes { 
+  display: flex; 
+  gap: 8px; 
+}
+
+.acoes button { 
+  padding: 6px 10px; 
+  font-size: 12px; 
+}
+
+.excluir { 
+  color: #a23838; 
+  border-color: #e3c7c7; 
+}
+
+.excluir:hover { 
+  background: #fff0f0; 
+}
+
+.vazio { 
+  text-align: center; 
+  color: #586e69; 
+  padding: 35px; 
+}
+
+.paginacao { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: 12px; 
+  margin-top: 20px; 
+  color: #586e69; 
+  font-size: 13px; 
+}
+
+.paginacao button { 
+  padding: 7px 12px; 
+}
+
+.campos { 
+  display: grid; 
+  grid-template-columns: repeat(2, minmax(0, 1fr)); 
+  gap: 18px; 
+}
+
+label { 
+  display: block; 
+  font-size: 14px; 
+  font-weight: bold; 
+}
+
+input, select, textarea { 
+  display: block; 
+  width: 100%; 
+  padding: 11px; 
+  margin-top: 6px; 
+  border: 1px solid #b9cbc5; 
+  border-radius: 5px; 
+  background: white; 
+  color: #243b3a; 
+  font: inherit; 
+  font-weight: normal; 
+}
+
+textarea { 
+  min-height: 90px; 
+  resize: vertical; 
+}
+
+.campo-longo { 
+  grid-column: 1 / -1; 
+}
+
+.acoes-formulario { 
+  display: flex; 
+  gap: 10px; 
+  margin-top: 24px; 
+}
+
+#mensagem { 
+  padding: 13px 16px; 
+  background: #e4f3e9; 
+  color: #215637; 
+  border: 1px solid #b1d4be; 
+  border-radius: 6px; 
+  white-space: pre-line; 
+}
+
+#mensagem.erro { 
+  background: #fff0f0; 
+  color: #8d2929; 
+  border-color: #e8bcbc; 
+}
+
+footer { 
+  text-align: center; 
+  color: #647b73; 
+  padding: 12px 0 30px; 
+  font-size: 12px; 
+}
+
+.sr-only { 
+  position: absolute; 
+  width: 1px; 
+  height: 1px; 
+  padding: 0; 
+  overflow: hidden; 
+  clip-path: inset(50%); 
+}
+
+[hidden] { 
+  display: none !important; 
+}
+
+@media (max-width: 600px) {
+  h1 { 
+    font-size: 23px; 
+  }
+
+  .painel { 
+    padding: 16px; 
+  }
+
+  .topo-painel { 
+    align-items: flex-start; flex-direction: column; 
+  }
+
+  .campos { 
+    grid-template-columns: 1fr; 
+  }
+
+  .paginacao { 
+    align-items: flex-start; 
+    flex-direction: column; 
+  }
+
+  nav button { 
+    flex-grow: 1; 
+    padding: 9px 12px; 
+  }
+}
